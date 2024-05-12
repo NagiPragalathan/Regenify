@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "base"
 ]
 
 MIDDLEWARE = [
@@ -80,6 +81,8 @@ WSGI_APPLICATION = "EchoAgri.wsgi.application"
 # }
 
 
+
+
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -97,6 +100,21 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
+
+DJONGO_ENFORCE_SCHEMA = False
+
+DATABASES = {
+   'default': {
+       'ENGINE': 'djongo',
+       'CLIENT': {
+           
+           'host': "mongodb+srv://nagi:nagi@cluster0.ohv5gsc.mongodb.net",
+           'name':'Regenify',
+           'authMechanism': "SCRAM-SHA-1",
+        }
+   }
+}
+
 
 
 # Internationalization
@@ -117,7 +135,9 @@ USE_TZ = True
 import os
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS = os.path.join(BASE_DIR, 'static'),
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),  # Adjust this path based on your project structure
+]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')

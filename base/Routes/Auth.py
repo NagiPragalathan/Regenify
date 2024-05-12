@@ -32,3 +32,4 @@ def signup_view(request):
         else:
             return render(request, 'Auth/signup.html', {'error': 'Signup failed'})
     return render(request, 'Auth/signup.html')
+
