@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from base.Routes.Auth import *
 from base.Routes.Home import *
+from base.Routes.VideoConf import *
 
 urlpatterns = []
 
@@ -31,8 +32,12 @@ Auth = [
 Home = [
     path('', home,name="home" )
 ]
+video_conf_url = [
+    path('MeetRoom',MeetRoom,name='MeetRoom'),
+]
 
 
 urlpatterns.extend(Home)
 urlpatterns.extend(Auth)
+urlpatterns.extend(video_conf_url)
 urlpatterns.extend(AdminUrl)
