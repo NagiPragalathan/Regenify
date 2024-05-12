@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from base.Routes.Auth import *
+from base.Routes.Home import *
 
 urlpatterns = []
 
@@ -28,9 +29,10 @@ Auth = [
     path('signup', signup_view, name='signup'),
 ]
 Home = [
-    path('', , )
+    path('', home,name="home" )
 ]
 
 
+urlpatterns.extend(Home)
 urlpatterns.extend(Auth)
 urlpatterns.extend(AdminUrl)
