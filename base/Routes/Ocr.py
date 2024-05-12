@@ -9,6 +9,7 @@ from g4f.client import Client
 from django.conf import settings
 import ast
 from base.models import PatientDocument
+import base64
 
 def generate_summary(text):
     client = Client()
@@ -52,7 +53,7 @@ def get_bot_response(request):
 
     if request.method == 'POST':
         # text = request.POST.get("text", "") + ".Give me the response the format of [{'document_id': 123, 'document_short_details': 'detail', 'summary_of_doc': 'summary', 'updated_time_of_doc': 'time', 'response_of_question': 'response'}, {'document_id': 456, 'document_short_details': 'detail', 'summary_of_doc': 'summary', 'updated_time_of_doc': 'time', 'response_of_question': 'response'}]"
-        text = request.POST.get("text", "") +".  Note:for keys and string values use should double quotes in the json i need to convert it python dictionary. dont add extra messages, titles, information, markdowns just Give me the response the format of [{'document_id': 18, 'document_short_details': 'Template for a letter explaining absence from work due to personal reasons.', 'summary_of_doc': 'The content is a template for a letter explaining the absence from work on a specific date due to personal reasons. It includes the sender's contact information, recipient's details, date of absence, and a polite closing.', 'updated_time_of_doc': '2024-05-05 20:50:59.800213+00:00', 'response_of_question': 'This is a template for a letter explaining absence from work due to personal reasons on a specific date.'}]. "
+        text = request.POST.get("text", "") +".  Note:for keys and string values use should (double quotes)("" it's important) in the json i need to convert it python dictionary. dont add extra messages, titles, information, markdowns just Give me the response the format of [{'document_id': 18, 'document_short_details': 'Template for a letter explaining absence from work due to personal reasons.', 'summary_of_doc': 'The content is a template for a letter explaining the absence from work on a specific date due to personal reasons. It includes the sender's contact information, recipient's details, date of absence, and a polite closing.', 'updated_time_of_doc': '2024-05-05 20:50:59.800213+00:00', 'response_of_question': 'This is a template for a letter explaining absence from work due to personal reasons on a specific date.'}]. "
 
         try:
             file_path = os.path.join(directory_path, f'conversation_history{request.user.id}.json')
@@ -102,7 +103,7 @@ def upload_image_view(request):
         else:
             extracted_text = extract_text_from_pdf(uploaded_file)
         summary = generate_summary(extracted_text)
-        updated_doc = PatientDocument.objects.create(user=request.user, file=uploaded_file, file_content=extracted_text, summary=summary)
+        updated_doc = PatientDocument.objects.create(user=request.user,  file_content=extracted_text, summary=summary)
         req_data = f"['text content':'{extracted_text}', 'document id': {updated_doc.id},'summary': '{summary}', date:{updated_doc.last_updated_file}'']"
         handle_conversation(request, req_data)
         

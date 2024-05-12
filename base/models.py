@@ -39,8 +39,8 @@ class UserRole(models.Model):
 class PatientDocument(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    file_content = models.BinaryField()
     summary = models.TextField(blank=True)
+    file_content = models.TextField(blank=True)
     last_updated_file = models.DateTimeField(auto_now=True)
 
     def __str__(self):

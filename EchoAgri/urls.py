@@ -19,6 +19,7 @@ from django.urls import path
 from base.Routes.Auth import *
 from base.Routes.Home import *
 from base.Routes.VideoConf import *
+from base.Routes.Ocr import *
 
 urlpatterns = []
 
@@ -35,9 +36,15 @@ Home = [
 video_conf_url = [
     path('MeetRoom',MeetRoom,name='MeetRoom'),
 ]
+AiOCR = [
+    path('show_doc', show_doc, name='show_doc'),
+    path('file_to_txt', upload_image_view, name='file_to_txt'),
+    path('get_bot_response', get_bot_response, name='get_bot_response'),
+]
 
 
 urlpatterns.extend(Home)
 urlpatterns.extend(Auth)
 urlpatterns.extend(video_conf_url)
 urlpatterns.extend(AdminUrl)
+urlpatterns.extend(AiOCR)

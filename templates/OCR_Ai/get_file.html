@@ -1,0 +1,67 @@
+{% extends 'Base/base.html' %}
+{% block content %}
+
+<div class="container mt-5">
+    <div class="flex justify-center">
+        <div class="w-full md:w-1/2">
+            <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                <h5 class="text-xl font-semibold text-center mb-4">Upload Document</h5>
+                <form id="documentForm" enctype="multipart/form-data" action="file_to_txt" method="post">
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="documentInput">Choose Document</label>
+                        <input type="file" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="documentInput" name="document" onchange="updateFileName(this)">
+                    </div>
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">Upload</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <div class="overflow-x-auto">
+        <table class="table-auto w-full text-left bg-gray-100">
+            <thead>
+                <tr>
+                    <th class="px-4 py-2">Doc #</th>
+                    <th class="px-4 py-2">File</th>
+                    <th class="px-4 py-2">Summary</th>
+                    <th class="px-4 py-2">Last Updated</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in doc %}
+                <tr>
+                    <td class="border px-4 py-2">{{ i.id }}</td>
+                    <td class="border px-4 py-2"><a href="{{ i.file.url }}" class="text-blue-500 hover:underline" title="{{ i.file.name }}">{{ i.file.name | truncatechars:20 }}</a></td>
+                    <td class="border px-4 py-2">{{ i.summary }}</td>
+                    <td class="border px-4 py-2">{{ i.last_updated_file }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+                    {% comment %} ------------------------------------------------------------------------------------------------------- {% endcomment %}
+  {% if messages %}
+  <script>
+      {% for message in messages %}
+          $(document).ready(function () {
+              $('.toast').toast('show');
+          });
+      {% endfor %}
+      function updateFileName(input) {
+        // Get the selected file name
+        var fileName = input.files[0].name;
+
+        // Update the label text with the file name
+        var label = input.nextElementSibling;
+        label.innerText = fileName;
+    }
+
+  </script>
+{% endif %}
+
+{% endblock %}
